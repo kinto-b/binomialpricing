@@ -1,6 +1,8 @@
 Option pricing in the binomial model
 ================
 
+![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+
 ## Introduction
 
 This package makes available a number of functions for pricing options
@@ -13,11 +15,92 @@ that is simple to implement, and, in the limit, yields option values
 which converge to those given by the more sophisticated Black-Scholes
 model.
 
-Many standard options are
+Included in this package are options for pricing common options. For
+example, here is a vanilla European call:
 
 ``` r
-# TODO
+# devtools::install_github("kinto-b/binomialpricing") # Uncomment to install
+library(binomialpricing)
+
+res <- crr_optionvalue(
+  S0 = 62,
+  u = 1.05943,
+  d = 1/1.05943,
+  r = 0.1/12, # 10% p.a compounded monthly
+  expiry = 5,
+  implicit_value = implicit_value(Sk=60, contract = "call"),
+  american = FALSE
+)
+crr_plot(res)
 ```
+
+![](README_files/figure-commonmark/unnamed-chunk-1-1.png)
+
+You can use the `implicit_value()` function to pass through a range of
+standard payoff functions, like a lookback payoff
+
+``` r
+res <- crr_optionvalue(
+  S0 = 62,
+  u = 1.05943,
+  d = 1/1.05943,
+  r = 0.1/12, # 10% p.a compounded monthly
+  expiry = 4,
+  implicit_value = implicit_value(Sk=60, contract = "call", exotic = "lookback_max"),
+  american = FALSE
+)
+crr_plot(res)
+```
+
+![](README_files/figure-commonmark/unnamed-chunk-2-1.png)
+
+Or a barrier payoff,
+
+``` r
+res <- crr_optionvalue(
+  S0 = 62,
+  u = 1.05943,
+  d = 1/1.05943,
+  r = 0.1/12, # 10% p.a compounded monthly
+  expiry = 4,
+  # ui denotes an up-and-in barrier
+  implicit_value = implicit_value(Sk=60, contract = "call", barrier = "ui"), 
+  american = FALSE
+)
+crr_plot(res)
+```
+
+![](README_files/figure-commonmark/unnamed-chunk-3-1.png)
+
+But you can also roll your own payoff function to pass through. It just
+needs to take in a matrix of prices, in which each column corresponds to
+a time step and each row to a possible path through the lattice,
+
+``` r
+strangle_payoff <- function(prices) {
+  pr <- prices[, ncol(prices)] # Latest price stored in last column
+  
+  vc <- pr - 65
+  vp <- 55-pr
+  v <- ifelse(vc<vp, vp, vc)
+  v[v<0] <- 0
+  
+  v
+}
+
+res <- crr_optionvalue(
+  S0 = 62,
+  u = 1.05943,
+  d = 1/1.05943,
+  r = 0.1/12, # 10% p.a compounded monthly
+  expiry = 5,
+  implicit_value = strangle_payoff,
+  american = FALSE
+)
+crr_plot(res)
+```
+
+![](README_files/figure-commonmark/unnamed-chunk-4-1.png)
 
 ## Background
 
@@ -223,10 +306,10 @@ $$
 X_0 = \mathbb{\tilde E} (X_T/ \hat r^{T} | \mathcal{F}_{0}) = \mathbb{\tilde E} (X_T/ \hat r^{T})
 $$
 
-We emphasise that this procedure allows us to replicate *any* arbitrary
+(We emphasise that this procedure allows us to replicate *any* arbitrary
 European claim. We often express this by saying that any European claim
 is *attainable* in the binomial model. Models with this property are
-deemed *complete*.
+deemed *complete*.)
 
 Or, more generally,
 
@@ -240,7 +323,7 @@ $X_{T-m} = \mathbb{\tilde E} (X_T / \hat r^{m} | \mathcal{F}_{T-m})$.
 
 In this manner, we can compute the prices, $\pi_0(X), ..., \pi_{T}(X)$,
 as well as the replicating process, $\phi_0, ..., \phi_{T}$, along the
-entire lattice.\[^3\]
+entire lattice.
 
 (Actually for European calls/puts we do not need to use the recursive
 procedure since a closed for solution exists, the so-called
@@ -293,9 +376,6 @@ $C_k = C^a_k$.
 <span class="proof-title">*Proof*. </span>It is obvious that
 $C^a_k \ge C_k$. We need only consider the possibility that
 $C^a_k > C_k$. Suppose this is the case.
-
-![Call option
-payoff](README_files/figure-commonmark/unnamed-chunk-2-1.png)
 
 Since $g_c(x) = (x - K)^+$ is convex, by Jensen’s inequality we have
 
@@ -425,7 +505,7 @@ Hence $\tau^*$ must be the maximising ST.
 
 </div>
 
-### Exotic options
+## References
 
 <div id="refs" class="references csl-bib-body hanging-indent">
 

@@ -208,7 +208,7 @@ crr_plot <- function(res) {
     )
 
   if (!is.null(res$values)) {
-    p <- ggrepel::geom_text_repel(
+    p <- p + ggrepel::geom_text_repel(
       ggplot2::aes(label = round(value, 2)),
       nudge_x = 0.2,
       force = 2,

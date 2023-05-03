@@ -1,8 +1,10 @@
 ---
 title: "Option pricing in the binomial model"
 format: gfm
-bibliography: docs/references.bib
+bibliography: README_files/references.bib
 ---
+
+![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
 ## Introduction
 
@@ -11,7 +13,7 @@ This package makes available a number of functions for pricing options in the co
 Included in this package are options for pricing common options. For example, here is a vanilla European call:
 
 ```{r}
-# devtools::install_github("kinto-b/binomialpricing")
+# devtools::install_github("kinto-b/binomialpricing") # Uncomment to install
 library(binomialpricing)
 
 res <- crr_optionvalue(
@@ -245,20 +247,6 @@ Given European call $C$ and American call $C^a$ with strike price $K$, at any ti
 :::{.proof}
 It is obvious that $C^a_k \ge C_k$. We need only consider the possibility that $C^a_k > C_k$. Suppose this is the case. 
 
-```{r echo=FALSE}
-#| fig-cap: "Call option payoff"
-par(bg = "#f0f8ff")
-x <- 1:50/10
-k <- 3
-y <- x-k
-y[x<k] <- 0
-
-plot(x, y, ann = FALSE, axes = FALSE, type = 'l', col=2, ylim=c(-0.2, 2))
-text(3, -0.2, "K")
-abline(h=-0.01)
-abline(v=0)
-```
-
 Since $g_c(x) = (x - K)^+$ is convex, by Jensen's inequality we have
 
 \begin{align*}
@@ -350,5 +338,5 @@ $$
 Hence $\tau^*$ must be the maximising ST.
 :::
 
-
+## References
 
