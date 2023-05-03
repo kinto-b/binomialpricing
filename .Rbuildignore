@@ -2,4 +2,7 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
+^README\.qmd$
+README_files/
+docs/
 ^cran-comments\.md$

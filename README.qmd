@@ -8,12 +8,80 @@ bibliography: docs/references.bib
 
 This package makes available a number of functions for pricing options in the context of the binomial model, developed by Cox, Ross, and Rubinstein [@cox_1979] and described in more detail below. This model is attractive from a pedagogical angle because it allows an instructor to exhibit the core ideas behind arbitrage pricing in an intuitive environment. Moreover, it yields a pricing algorithm that is simple to implement, and, in the limit, yields option values which converge to those given by the more sophisticated Black-Scholes model.
 
-Many standard options are 
+Included in this package are options for pricing common options. For example, here is a vanilla European call:
 
 ```{r}
-# TODO
+# devtools::install_github("kinto-b/binomialpricing")
+library(binomialpricing)
+
+res <- crr_optionvalue(
+  S0 = 62,
+  u = 1.05943,
+  d = 1/1.05943,
+  r = 0.1/12, # 10% p.a compounded monthly
+  expiry = 5,
+  implicit_value = implicit_value(Sk=60, contract = "call"),
+  american = FALSE
+)
+crr_plot(res)
 ```
 
+You can use the `implicit_value()` function to pass through a range of standard payoff functions, like a lookback payoff
+
+```{r}
+res <- crr_optionvalue(
+  S0 = 62,
+  u = 1.05943,
+  d = 1/1.05943,
+  r = 0.1/12, # 10% p.a compounded monthly
+  expiry = 4,
+  implicit_value = implicit_value(Sk=60, contract = "call", exotic = "lookback_max"),
+  american = FALSE
+)
+crr_plot(res)
+```
+
+Or a barrier payoff,
+
+```{r}
+res <- crr_optionvalue(
+  S0 = 62,
+  u = 1.05943,
+  d = 1/1.05943,
+  r = 0.1/12, # 10% p.a compounded monthly
+  expiry = 4,
+  # ui denotes an up-and-in barrier
+  implicit_value = implicit_value(Sk=60, contract = "call", barrier = "ui"), 
+  american = FALSE
+)
+crr_plot(res)
+```
+
+But you can also roll your own payoff function to pass through. It just needs to take in a matrix of prices, in which each column corresponds to a time step and each row to a possible path through the lattice,
+
+```{r}
+strangle_payoff <- function(prices) {
+  pr <- prices[, ncol(prices)] # Latest price stored in last column
+  
+  vc <- pr - 65
+  vp <- 55-pr
+  v <- ifelse(vc<vp, vp, vc)
+  v[v<0] <- 0
+  
+  v
+}
+
+res <- crr_optionvalue(
+  S0 = 62,
+  u = 1.05943,
+  d = 1/1.05943,
+  r = 0.1/12, # 10% p.a compounded monthly
+  expiry = 5,
+  implicit_value = strangle_payoff,
+  american = FALSE
+)
+crr_plot(res)
+```
 
 ## Background
 
