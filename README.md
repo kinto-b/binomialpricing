@@ -140,16 +140,12 @@ setting.
 The main options we will deal with are European calls and puts and
 American calls and puts.
 
-<div id="def-european" class="theorem definition">
-
-<span class="theorem-title">**Definition 1 **</span>A European call
-(resp. put), $X$, on a given stock, $S$, gives its holder the right but
-not the obligation to buy (resp. sell) that stock at maturity for an
-agreed upon price, the strike price. The value of the call (resp. put)
-at maturity is therefore $X_T = g_c(S_T) = (S_T - K)^{+}$ (resp.
+**Definition** A European call (resp. put), $X$, on a given stock, $S$,
+gives its holder the right but not the obligation to buy (resp. sell)
+that stock at maturity for an agreed upon price, the strike price. The
+value of the call (resp. put) at maturity is therefore
+$X_T = g_c(S_T) = (S_T - K)^{+}$ (resp.
 $X_T = g_p(S_T) = (K - S_T)^{+}$).
-
-</div>
 
 Notice that the difference between the value of a European call and put
 at maturity is
@@ -159,41 +155,27 @@ g_c(S_T) - g_p(S_T) = S_T - K
 $$
 
 We will use this result below to establish put/call parity in the
-context of the binomial model. See [Theorem 2](#thm-put_call_parity).
+context of the binomial model. See Theorem 2.
 
 An American call (resp. put) is identical to a European call (resp. put)
 except that it gives the holder the right to buy (resp. sell) the stock
 at any time up to maturity.
 
-<div id="def-implicit_price" class="theorem definition">
-
-<span class="theorem-title">**Definition 2 **</span>The *implicit price*
-of an American call (resp. put) at time $k$ is the amount the holder
-would receive if they exercised it to buy (resp. sell) the underlying
-stock at the strike price. It is given by $g(S_k) = (S_k - K)^{+}$
-(resp. $g(S_k) = (K - S_T)^{+}$).
-
-</div>
+**Definition** The *implicit price* of an American call (resp. put) at
+time $k$ is the amount the holder would receive if they exercised it to
+buy (resp. sell) the underlying stock at the strike price. It is given
+by $g(S_k) = (S_k - K)^{+}$ (resp. $g(S_k) = (K - S_T)^{+}$).
 
 ### Arbitrage pricing
 
 A fundamental technique we will use is that of **replication**.
 
-<div id="def-replicate" class="theorem definition">
+**Definition** Portfolio $\phi$ *replicates* a contingent claim $X$ if
+$V_T(\phi) = X_T$ a.s.
 
-<span class="theorem-title">**Definition 3 **</span>Portfolio $\phi$
-*replicates* a contingent claim $X$ if $V_T(\phi) = X_T$ a.s.
-
-</div>
-
-<div id="def-manufacturing_cost" class="theorem definition">
-
-<span class="theorem-title">**Definition 4 **</span>The initial price of
-a portfolio $\phi$ which replicates contingent claim $X$ is the
-*manufacturing cost*, $\pi_0(X)$ of that claim,
-i.e. $\pi_0(X) = V_0(\phi)$.
-
-</div>
+**Definition** The initial price of a portfolio $\phi$ which replicates
+contingent claim $X$ is the *manufacturing cost*, $\pi_0(X)$ of that
+claim, i.e. $\pi_0(X) = V_0(\phi)$.
 
 Notice that if $X_0 \ne \pi_0(X)$, then there is a way to make a
 risk-free profit. For example, suppose I start with no money and that
@@ -215,14 +197,9 @@ It would seem, therefore, that the only rational price for $X$ should be
 its manufacturing price. And indeed this is the case if the model
 $\mathcal{M}$ is arbitrage-free.
 
-<div id="def-arbitrage_free" class="theorem definition">
-
-<span class="theorem-title">**Definition 5 **</span>A market
-$\mathcal{M}$ is *arbitrage-free* if and only if
+**Definition** A market $\mathcal{M}$ is *arbitrage-free* if and only if
 $\nexists \phi \in \Phi$ such that $V_0(\phi) = 0$ and $V_T(\phi) \ge 0$
 a.s. and $\mathbb{P}(V_T(\phi) > 0) > 0$.
-
-</div>
 
 ## The binomial model
 
@@ -313,13 +290,8 @@ deemed *complete*.)
 
 Or, more generally,
 
-<div id="thm-european_valuation" class="theorem">
-
-<span class="theorem-title">**Theorem 1 **</span>The value of a European
-option at time $T-m$ is given by
+**Theorem 1** The value of a European option at time $T-m$ is given by
 $X_{T-m} = \mathbb{\tilde E} (X_T / \hat r^{m} | \mathcal{F}_{T-m})$.
-
-</div>
 
 In this manner, we can compute the prices, $\pi_0(X), ..., \pi_{T}(X)$,
 as well as the replicating process, $\phi_0, ..., \phi_{T}$, along the
@@ -332,17 +304,11 @@ procedure since a closed for solution exists, the so-called
 In closing, we observe that the value of a European call is exactly
 equal to the value of a European put.
 
-<div id="thm-put_call_parity" class="theorem">
-
-<span class="theorem-title">**Theorem 2 (Put/call parity) **</span>Given
-European call $C$ and put $P$ with strike price $K$, at any time $T-k$,
+**Theorem 2 (Put/call parity)** Given European call $C$ and put $P$ with
+strike price $K$, at any time $T-k$,
 $C_{T-k} - P_{T-k} = S_{T-k} - K \hat r^{-k}$.
 
-</div>
-
-<div class="proof">
-
-<span class="proof-title">*Proof*. </span>Notice that
+*Proof* Notice that
 $\mathbb{\tilde E}(S_T | F_{T-1}) = \tilde p uS_{T-1} + (1-\tilde p)dS_{T-1} = \hat r S_{T-1}$.
 It is simple to extend this result to show
 $\mathbb{\tilde E}(S_T | F_{T-k}) = \hat r^k S_{T-k}$. Consequently,
@@ -354,8 +320,6 @@ C_{T-k} - P_{T-k}
   = S_{T-k} - K \hat r^{-k}
 $$
 
-</div>
-
 ### American options
 
 On the face of it, American options seem to be somewhat more complicated
@@ -363,19 +327,11 @@ than their European cousins. And, indeed, American puts *are* more
 challenging to price than European puts. American calls, on the other
 hand, are equivalent to European calls as the following theorem states,
 
-<div id="thm-american_call_equivalence" class="theorem">
+**Theorem 3** Given European call $C$ and American call $C^a$ with
+strike price $K$, at any time $T-k$, $C_k = C^a_k$.
 
-<span class="theorem-title">**Theorem 3 **</span>Given European call $C$
-and American call $C^a$ with strike price $K$, at any time $T-k$,
-$C_k = C^a_k$.
-
-</div>
-
-<div class="proof">
-
-<span class="proof-title">*Proof*. </span>It is obvious that
-$C^a_k \ge C_k$. We need only consider the possibility that
-$C^a_k > C_k$. Suppose this is the case.
+*Proof* It is obvious that $C^a_k \ge C_k$. We need only consider the
+possibility that $C^a_k > C_k$. Suppose this is the case.
 
 Since $g_c(x) = (x - K)^+$ is convex, by Jensen’s inequality we have
 
@@ -390,8 +346,6 @@ balances what I lose on the American one; if she exercises early, I rake
 in even more since I can sell my European call for more than the
 $(S_{k+t} - K)^+$ I owe her. In other words, if $C^a_k > C_k$ there is
 an arbitrage opportunity.
-
-</div>
 
 Notice that for an American put a similar set of inequalities can be
 formulated,
@@ -415,9 +369,7 @@ $1, 2, ..., T$, under the restriction that only one of them may be
 exercised. Consequently, it’s price at any time should be the same as
 the highest priced European option. In other words,
 
-<div id="thm-american_valuation" class="theorem">
-
-<span class="theorem-title">**Theorem 4 **</span>Let
+**Theorem 4** Let
 $\mathcal{T}_m = \{\tau: \tau \text{ is a ST and } m \le \tau \le T\}$
 be the class of all stopping times bounded by $m$ and $T$. The value of
 an American put at time $m$ is given by
@@ -426,8 +378,6 @@ $$
 X_{m} = \max_{\tau \in \mathcal{T}_m} \mathbb{\tilde E} (g_p(S_\tau) / \hat r^{\tau - m} | \mathcal{F}_{m})
 $$
 
-</div>
-
 Now, it is obvious that
 $X_m \ge \mathbb{\tilde E}(X_{m+1}|\mathcal{F}_{m})$. For the
 right-hand-side is exactly the price the option *would* have *if* we
@@ -435,17 +385,10 @@ were unable to exercise at time $m$, which cannot but be lower than the
 price of an option which offers the additional freedom of exercising at
 time $m$. More formally, we have the result
 
-<div id="thm-american_supermg" class="theorem">
+**Theorem 5** The value of an American put is a supermartingale
 
-<span class="theorem-title">**Theorem 5 **</span>The value of an
-American put is a supermartingale
-
-</div>
-
-<div class="proof">
-
-<span class="proof-title">*Proof*. </span>Let $\tau_m^*$ be the ST that
-realises the maximum at time $m$. Then
+*Proof* Let $\tau_m^*$ be the ST that realises the maximum at time $m$.
+Then
 
 $$
 \mathbb{\tilde E}(X_{m+1}|\mathcal{F}_{m})
@@ -457,8 +400,6 @@ $$
 where (\*) is due to the tower property and (\*\*) is because $\tau_m^*$
 is the ST which maximises the value of
 $\mathbb{\tilde E} (g_p(S_\tau) / \hat r^{\tau - m} | \mathcal{F}_{m})$.
-
-</div>
 
 Hence by the optional sampling theorem we end up with a squeeze,
 
@@ -473,19 +414,12 @@ Since $X_m \ge g_p(S_{m}) / \hat r^{m}$ for all $m$, the upshot is that
 $X_{\tau^*} = g_p(S_{\tau^*}) / \hat r^{\tau^*}$ a.s. This result allows
 us to establish,
 
-<div id="thm-american_optimal_stop" class="theorem">
+**Theorem 6** Given an American put, the optimal exercise time is given
+by $\tau^* = \inf \{k: X_k = g_p(S_k) / \hat r^{k}\}$
 
-<span class="theorem-title">**Theorem 6 **</span>Given an American put,
-the optimal exercise time is given by
-$\tau^* = \inf \{k: X_k = g_p(S_k) / \hat r^{k}\}$
-
-</div>
-
-<div class="proof">
-
-<span class="proof-title">*Proof*. </span>We know that if $\tau'$ is a
-maximising ST, then $X_{\tau'} = g_p(S_{\tau'}) / \hat r^{\tau'}$. Hence
-it follows that $\tau^* \le \tau'$. Thus, by optional sampling theorem,
+*Proof* We know that if $\tau'$ is a maximising ST, then
+$X_{\tau'} = g_p(S_{\tau'}) / \hat r^{\tau'}$. Hence it follows that
+$\tau^* \le \tau'$. Thus, by optional sampling theorem,
 
 $$
 g_p(S_{\tau^*}) / \hat r^{\tau^*} 
@@ -502,8 +436,6 @@ $$
 $$
 
 Hence $\tau^*$ must be the maximising ST.
-
-</div>
 
 ## References
 
